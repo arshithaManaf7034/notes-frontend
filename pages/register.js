@@ -5,46 +5,69 @@ import { apiRequest } from "../lib/api";
 export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  async function register() {
+  async function register(e) {
+    e.preventDefault(); // ✅ IMPORTANT: prevent page reload
+    console.log("REGISTER CLICKED");
+
+    if (!email || !password) {
+      alert("Please fill all fields");
+      return;
+    }
+
     try {
-      await apiRequest("/auth/register", "POST", {
+      setLoading(true);
+
+      const res = await apiRequest("/auth/register", "POST", {
         email,
         password,
       });
+
+      console.log("REGISTER RESPONSE:", res);
+
       alert("Registration successful! Please login.");
       router.push("/");
     } catch (err) {
-      alert(err.message);
+      console.error("REGISTER ERROR:", err);
+      alert(err.message || "Registration failed");
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
-   <div className="auth-container">
-  <div className="form-card">
-    <h1>Register</h1>
+    <div className="auth-container">
+      <div className="form-card">
+        <h1>Register</h1>
 
-    <input
-      placeholder="Email"
-      value={email}
-      onChange={(e) => setEmail(e.target.value)}
-    />
+        <form onSubmit={register}>
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
 
-    <input
-      type="password"
-      placeholder="Password"
-      value={password}
-      onChange={(e) => setPassword(e.target.value)}
-    />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
 
-    <button onClick={register}>Register</button>
+          <button type="submit" disabled={loading}>
+            {loading ? "Registering..." : "Register"}
+          </button>
+        </form>
 
-    <p>
-      Already have an account? <a href="/">Login</a>
-    </p>
-  </div>
-</div>
-
+        <p>
+          Already have an account? <a href="/">Login</a>
+        </p>
+      </div>
+    </div>
   );
 }
