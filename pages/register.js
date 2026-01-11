@@ -9,7 +9,7 @@ export default function Register() {
   const router = useRouter();
 
   async function register(e) {
-    e.preventDefault(); // ✅ IMPORTANT: prevent page reload
+    e.preventDefault(); 
     console.log("REGISTER CLICKED");
 
     if (!email || !password) {
