@@ -28,43 +28,58 @@ export default function AuthPage() {
 
   return (
     <div className="auth-wrapper">
-      <div className="auth-card">
-        {/* Tabs */}
-        <div className="auth-tabs">
-          <button
-            className={`auth-tab ${mode === "login" ? "active" : ""}`}
-            onClick={() => setMode("login")}
-          >
-            SIGN IN
-          </button>
-
-          <button
-            className={`auth-tab ${mode === "register" ? "active" : ""}`}
-            onClick={() => setMode("register")}
-          >
-            REGISTER NOW
-          </button>
+      <div className="auth-layout">
+        
+        {/* LEFT TEXT SECTION */}
+        <div className="auth-left">
+          <h1>
+            Your Ideas.<br />
+            Your Canvas.
+          </h1>
+          <p>
+            Effortlessly capture, organize,<br />
+            and create.
+          </p>
         </div>
 
-        {/* Form */}
-        <div className="auth-body">
-          <input
-            placeholder="Email ID"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+        {/* RIGHT AUTH CARD */}
+        <div className="auth-card">
+          <div className="auth-tabs">
+            <button
+              className={`auth-tab ${mode === "login" ? "active" : ""}`}
+              onClick={() => setMode("login")}
+            >
+              SIGN IN
+            </button>
 
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+            <button
+              className={`auth-tab ${mode === "register" ? "active" : ""}`}
+              onClick={() => setMode("register")}
+            >
+              REGISTER NOW
+            </button>
+          </div>
 
-          <button onClick={submit}>
-            {mode === "login" ? "SIGN IN" : "REGISTER"}
-          </button>
+          <div className="auth-body">
+            <input
+              placeholder="Email ID"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+
+            <button onClick={submit}>
+              {mode === "login" ? "SIGN IN" : "REGISTER"}
+            </button>
+          </div>
         </div>
+
       </div>
     </div>
   );
