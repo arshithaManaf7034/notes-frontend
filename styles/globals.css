@@ -1,6 +1,153 @@
 /* ======================================================
    GLOBAL BASE
 ====================================================== */
+/* =========================
+   NOTES PAGE (NEW UI)
+========================= */
+.notes-page {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+/* HEADER */
+.notes-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 18px 24px;
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+}
+
+.notes-header h1 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.logout-btn {
+  background: #e2f7f5;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+/* CREATE NOTE */
+.create-note-card {
+  background: white;
+  margin-top: 28px;
+  padding: 18px;
+  border-radius: 18px;
+  display: grid;
+  grid-template-columns: 1fr 2fr auto;
+  gap: 12px;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.1);
+}
+
+.create-note-card input,
+.create-note-card textarea {
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  font-size: 14px;
+}
+
+.create-note-card textarea {
+  resize: none;
+  height: 44px;
+}
+
+.primary-btn {
+  background: #4f9d9d;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+/* NOTES GRID */
+.notes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 22px;
+  margin-top: 36px;
+}
+
+/* NOTE CARD */
+.note-card {
+  padding: 18px;
+  border-radius: 18px;
+  min-height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 14px 34px rgba(0,0,0,0.12);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.note-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 22px 40px rgba(0,0,0,0.18);
+}
+
+.note-card h3 {
+  margin: 0 0 6px;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.note-card p {
+  font-size: 14px;
+  line-height: 1.45;
+  color: #374151;
+}
+
+/* ACTIONS */
+.note-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.note-actions button,
+.note-actions a {
+  font-size: 12px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.7);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.danger-btn {
+  background: #fee2e2 !important;
+  color: #991b1b;
+}
+
+/* EMPTY */
+.empty-state {
+  margin-top: 40px;
+  text-align: center;
+  color: #64748b;
+}
+
+/* COLORS */
+.bg-yellow { background: #fff7cc; }
+.bg-orange { background: #ffedd5; }
+.bg-purple { background: #ede9fe; }
+.bg-green  { background: #dcfce7; }
+.bg-blue   { background: #e0f2fe; }
+
+/* MOBILE */
+@media (max-width: 640px) {
+  .create-note-card {
+    grid-template-columns: 1fr;
+  }
+}
+
 * {
   box-sizing: border-box;
 }
