@@ -3,14 +3,13 @@ import { useRouter } from "next/router";
 import { apiRequest } from "../lib/api";
 
 export default function Notes() {
-  
   const [notes, setNotes] = useState([]);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+
   const [editingId, setEditingId] = useState(null);
   const [editTitle, setEditTitle] = useState("");
   const [editContent, setEditContent] = useState("");
-
 
   const router = useRouter();
   const token =
@@ -41,8 +40,8 @@ export default function Notes() {
     await apiRequest(`/notes/${id}`, "DELETE", null, token);
     loadNotes();
   }
+
   async function updateNote(id) {
-  try {
     await apiRequest(
       `/notes/${id}`,
       "PUT",
@@ -54,10 +53,7 @@ export default function Notes() {
     setEditTitle("");
     setEditContent("");
     loadNotes();
-  } catch (err) {
-    alert(err.message);
   }
-}
 
   useEffect(() => {
     if (!token) router.push("/");
@@ -65,17 +61,17 @@ export default function Notes() {
   }, []);
 
   return (
-    <div className="container">
-      {/* TOP BAR */}
-      <div className="topbar">
-        <h2>My Notes</h2>
+    <div className="notes-page">
+      {/* HEADER */}
+      <header className="notes-header">
+        <h1>My Notes</h1>
         <button className="logout-btn" onClick={logout}>
           Logout
         </button>
-      </div>
+      </header>
 
       {/* CREATE NOTE */}
-      <div className="form-card">
+      <section className="create-note-card">
         <input
           placeholder="Title"
           value={title}
@@ -88,80 +84,80 @@ export default function Notes() {
           onChange={(e) => setContent(e.target.value)}
         />
 
-        <button onClick={createNote}>Create Note</button>
-      </div>
+        <button className="primary-btn" onClick={createNote}>
+          Create Note
+        </button>
+      </section>
 
       {/* NOTES GRID */}
-     
-        <div className="notes-grid">
-          {notes.map((n, index) => (
-          <div key={n.id} className={`note-card ${getColor(index)}`}>
-            {editingId === n.id ? (
-            <>
-          <input
-            value={editTitle}
-            onChange={(e) => setEditTitle(e.target.value)}
-          />
+      <section className="notes-grid">
+        {notes.map((note, index) => (
+          <div
+            key={note.id}
+            className={`note-card ${getColor(index)}`}
+          >
+            {editingId === note.id ? (
+              <div className="edit-note">
+                <input
+                  value={editTitle}
+                  onChange={(e) => setEditTitle(e.target.value)}
+                />
 
-          <textarea
-            value={editContent}
-            onChange={(e) => setEditContent(e.target.value)}
-          />
+                <textarea
+                  value={editContent}
+                  onChange={(e) => setEditContent(e.target.value)}
+                />
 
-          <button onClick={() => updateNote(n.id)}>Save</button>
-          <button onClick={() => setEditingId(null)}>Cancel</button>
-        </>
-      ) : (
-        <>
-          <h3>{n.title}</h3>
-          <p>{n.content}</p>
+                <div className="note-actions">
+                  <button onClick={() => updateNote(note.id)}>Save</button>
+                  <button onClick={() => setEditingId(null)}>Cancel</button>
+                </div>
+              </div>
+            ) : (
+              <>
+                <h3>{note.title}</h3>
+                <p>{note.content}</p>
 
-          <div className="note-footer">
-            <small>
-              Created:{" "}
-              {n.created_at
-                ? new Date(n.created_at).toLocaleDateString()
-                : "—"}
-            </small>
+                <div className="note-footer">
+                  <small>
+                    Created:{" "}
+                    {note.created_at
+                      ? new Date(note.created_at).toLocaleDateString()
+                      : "—"}
+                  </small>
 
-            <div style={{ marginTop: "8px" }}>
-              <button
-                onClick={() => {
-                  setEditingId(n.id);
-                  setEditTitle(n.title);
-                  setEditContent(n.content);
-                }}
-              >
-                Edit
-              </button>
+                  <div className="note-actions">
+                    <button
+                      onClick={() => {
+                        setEditingId(note.id);
+                        setEditTitle(note.title);
+                        setEditContent(note.content);
+                      }}
+                    >
+                      Edit
+                    </button>
 
-              {" | "}
-              <a href={`/versions?noteId=${n.id}`}>View Versions</a>
+                    <a href={`/versions?noteId=${note.id}`}>
+                      View Versions
+                    </a>
 
-              {" | "}
-              <button
-                onClick={() => deleteNote(n.id)}
-                style={{
-                  background: "transparent",
-                  border: "none",
-                  color: "#dc2626",
-                  cursor: "pointer"
-                }}
-              >
-                Delete
-              </button>
-            </div>
+                    <button
+                      className="danger-btn"
+                      onClick={() => deleteNote(note.id)}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
-        </>
-      )}
-    </div>
-  ))}
-</div>
-
+        ))}
+      </section>
 
       {/* EMPTY STATE */}
       {notes.length === 0 && (
-        <p style={{ marginTop: "40px", color: "#64748b" }}>
+        <p className="empty-state">
           You don’t have any notes yet. Create one above ✨
         </p>
       )}
